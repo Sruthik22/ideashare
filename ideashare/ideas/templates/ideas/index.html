@@ -1,0 +1,96 @@
+<HTML>
+	<head>
+
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$('Up-Vote').click(function() {
+				$.post("",{
+					buttontype : "Up-Vote",
+					user : {{ user.firstname }},
+					postName : {{ post.title }},
+
+				},
+				function(data, status) {
+					alert("Data: " + data + "\nStatus: " + status);
+				});
+			});
+
+		</script>
+	</head>
+	<body>
+		<div class="container">
+		<ul class="nav nav-tabs">
+  			<li role="presentation" class="active"><a href="#">Home</a></li>
+  			<li role="presentation"><a href="#">Winning Ideas</a></li>
+  			<li role="presentation"><a href="yourideas.html">Your Ideas</a></li>
+  			<li role="presentation"><a href="#">Friends</a></li>
+		</ul>
+
+		<br>
+		<div class = "row">
+			<div class = "col-sm-8 col-sm-offset-2">
+		{% for post in posts %}
+		<div class="panel panel-info">
+  			<div class="panel-heading">
+    			<span class="panel-title">Post</span>
+				<div class="btn-group pull-right" style="top = -15px;" role="group" aria-label="...">
+  					<button type="button" class="btn btn-success glyphicon glyphicon-ok Up-Vote">    Up-Vote</button>
+					<button type="button" class="btn btn-danger glyphicon glyphicon-remove Down-Vote">    Down-Vote</button>
+  					<button class="glyphicon glyphicon-bookmark btn btn-default pull-right" aria-hidden="true"></button>
+				</div>
+				<br>
+				<br>
+  			</div>
+  			<div class="panel-body">
+    			{{ post.content }}
+  			</div>
+  			<div class="panel-footer">
+  				Comments
+
+  				<br>
+
+  				{% for Comment in post.Comments.all %}
+  				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  					<div class="panel panel-default">
+    					<div class="panel-heading" role="tab" id="headingOne">
+      						<h4 class="panel-title">
+        					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          					{{ Comment.title }}  
+          					<div class="btn-group pull-right" style="top = -15px;" role="group" aria-label="...">
+  								<button type="button" class="glyphicon glyphicon-user btn"></button>
+          						<button type="button" class="glyphicon glyphicon-flag btn btn-danger"></button>
+							</div>
+							<br>
+							<br>
+          					</a>
+      						</h4>
+    					</div>
+    				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      					<div class="panel-body">
+      						{{ Comment.content }}
+      					</div>
+    				</div>
+  					</div>
+					</div>
+					{% endfor %}
+  					</div>
+
+		</div>
+		{% endfor %}
+		</div>
+		</div>
+
+
+
+
+		<nav>
+  			<ul class="pagination">
+    			<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    			<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+  			</ul>
+		</nav>
+	</div>
+	</body>
+</HTML>
