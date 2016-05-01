@@ -6,16 +6,18 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Post(models.Model):
+    title = models.CharField(max_length=30)
     content = models.TextField()
-    count = 0
+    author = models.ForeignKey(User)
+    votes = models.IntegerField(default = 0)
     def __str__(self):
     	return self.content
 
 class Comment(models.Model):
 	title = models.CharField(max_length=30)
 	content = models.TextField()
-	author = models.ForeignKey(User, related_name='Comments')
-	Post = models.ForeignKey(Post, related_name='Comments')
+	author = models.ForeignKey(User)
+	Post = models.ForeignKey(Post)
 	def __str__(self):
 		return self.content
 		
